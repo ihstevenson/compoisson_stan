@@ -18,9 +18,6 @@ model(2).compile();
 model(3) = StanModel('file','stan\compoisson_regression.stan');
 model(3).compile();
 
-model(4) = StanModel('file','stan\gencount_regression.stan');
-model(4).compile();
-
 for i=1:length(model)
     model(i).working_dir = 'C:\Users\ian\Documents\MATLAB\';
 end

@@ -1,3 +1,9 @@
+% Author: Kota Yamaguchi
+% 18 Jun 2011 (Updated 22 Apr 2013)
+% https://www.mathworks.com/matlabcentral/fileexchange/31862-strjoin
+%
+% note: this script is a MatlabStan/RData dependency that's missing from older versions of matlab
+
 function output = strjoin(input, separator)
 %STRJOIN Concatenate an array into a single string.
 %

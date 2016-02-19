@@ -87,23 +87,4 @@ for neuron = 3
         ylabel('Fano Factor')
         drawnow
     end
-    
-    m=4;
-    mfit{neuron,m} = model_optimize_gc(y,theta,false,model(m),'fourier',2,3,[100 1000],false);
-    subplot(2,length(model),m)
-    plot(theta,y,'bo')
-    hold on
-    plot(mfit{neuron,m}.x_fine,mfit{neuron,m}.ey_fine,'r')
-    plot(x0,ey(neuron,:),'k');
-    hold off
-    title(strrep(mfit{neuron,m}.model.model_name,'_',' '));
-    ylabel('Spike Count')
-    subplot(2,length(model),length(model)+m)
-    hold on
-    plot(mfit{neuron,m}.x_fine,mfit{neuron,m}.vy_fine./mfit{neuron,m}.ey_fine,'r')
-    plot(x0,vy(neuron,:)./ey(neuron,:),'k');
-    plot(x0,ff(neuron,:),'o')
-    hold off
-    ylabel('Fano Factor')
-    drawnow
 end
