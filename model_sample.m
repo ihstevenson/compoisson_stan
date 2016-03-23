@@ -4,7 +4,12 @@
 %           model   list of compiled stan models
 %           isCirc  bool whether or not the variable is circular
 
-function fout = model_optimize(y,theta,getSuffStats,model,basis,nvec,mvec,sigma,verbose)
+function fout = model_optimize(y,theta,getSuffStats,model,basis,nvec,mvec,sigma,verbose,warmup_iters,iters)
+
+if nargin<10,
+    warmup_iters = 50;
+    iters = 100;
+end
 
 % Compute sufficient statistics for speed...
 if getSuffStats
@@ -52,7 +57,7 @@ for neuron=1:size(y,2)
             d.type('X') = 'matrix';
             d.type('G') = 'matrix';
             
-            fit = model.optimizing('data',d);
+            fit = model.sampling('data',d,'warmup',warmup_iters,'iter',iters,'verbose',false);
             addlistener(fit,'exit',@exitHandler);
             fit.block();
             fit.print();

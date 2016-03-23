@@ -61,9 +61,9 @@ box off; set(gca,'TickDir','out')
 xlabel('Mean Spike Count')
 ylabel('Spike Count Variance');
 
-%%
+%% MAP Estimation...
 
-for neuron = 3
+for neuron = 1
     theta = tcAll{neuron}(:,1);
     y = tcAll{neuron}(:,2);
     figure(neuron); clf
@@ -88,3 +88,32 @@ for neuron = 3
         drawnow
     end
 end
+
+%% Bayesian Estimation...
+
+for neuron = 1
+    theta = tcAll{neuron}(:,1);
+    y = tcAll{neuron}(:,2);
+    figure(neuron); clf
+    mfit = cell(0);
+    for m = 1
+        mfit{neuron,m} = model_sample(y,theta,false,model(m),'fourier',2,0,[100 1000],false);
+        subplot(2,length(model),m)
+        plot(theta,y,'bo')
+        hold on
+        plot(mfit{neuron,m}.x_fine,mfit{neuron,m}.ey_fine,'r')
+        plot(x0,ey(neuron,:),'k');
+        hold off
+        title(strrep(mfit{neuron,m}.model.model_name,'_',' '));
+        ylabel('Spike Count')
+        subplot(2,length(model),length(model)+m)
+        hold on
+        plot(mfit{neuron,m}.x_fine,mfit{neuron,m}.vy_fine./mfit{neuron,m}.ey_fine,'r')
+        plot(x0,vy(neuron,:)./ey(neuron,:),'k');
+        plot(x0,ff(neuron,:),'o')
+        hold off
+        ylabel('Fano Factor')
+        drawnow
+    end
+end
+
