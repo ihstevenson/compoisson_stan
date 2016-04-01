@@ -1,8 +1,13 @@
-% fitModels_v1
+% model_optimize
 % given     y       [trials x neurons] spike counts
 %           theta   [trials x 1] stimulus/mov parameter
-%           model   list of compiled stan models
-%           isCirc  bool whether or not the variable is circular
+%           getSuffStats boolean whether to use sufficient statistics
+%           model   compiled stan model
+%           basis   string for basis name
+%           nvec    number of bases for mean/lambda
+%           mvec    number of basis for r/nu
+%           sigma   s.d. of normal priors
+%           verbose boolean, generates summary figure
 
 function fout = model_optimize(y,theta,getSuffStats,model,basis,nvec,mvec,sigma,verbose)
 

@@ -50,14 +50,31 @@ box off; set(gca,'TickDir','out')
 xlabel('Time')
 ylabel('Fano Factor')
 
-%%
+%% MAP Estimation...
 
 t = reshape(repmat(linspace(0,1,size(S,2)),size(S,1),1),[],1);
 y = S(:);
 
+figure(2); clf
 mfit = cell(0);
-mfit{1} = fitModels(y,t,false,model(2),'cubicbspline',1,1);
-mfit{2} = fitModels_v2(y,theta,model(2),true,1:20,1);
-mfit{3} = fitModels_v2(y,theta,model(3),true,1:20,1);
-mfit{4} = fitModels_v2(y,theta,model(4),true,1:20,2:10);
+for m = 1:3
+    mfit{neuron,m} = model_optimize(y,t,false,model(m),'cubicbspline',5,9,[100 100],false);
+    subplot(2,length(model),m)
+    bar(linspace(0,1,size(S,2)),mean(S),1)
+    hold on
+    errorbar(linspace(0,1,size(S,2)),mean(S),std(S),'.')
+    plot(mfit{neuron,m}.x_fine,mfit{neuron,m}.ey_fine,'r')
+    hold off
+    title(strrep(mfit{neuron,m}.model.model_name,'_',' '));
+    axis tight
+    ylabel('Spike Count')
+    subplot(2,length(model),length(model)+m)
+    plot(linspace(0,1,size(S,2)),var(S)./mean(S),'ko');
+    hold on
+    stairs(linspace(0,1,size(S,2)),vy./ey,'b')
+    plot(mfit{neuron,m}.x_fine,mfit{neuron,m}.vy_fine./mfit{neuron,m}.ey_fine,'r')        
+    hold off
+    ylabel('Fano Factor')
+    drawnow
+end
 
