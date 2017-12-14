@@ -69,7 +69,7 @@ for neuron = 1
     figure(neuron); clf
     mfit = cell(0);
     for m = 1:3
-        mfit{neuron,m} = model_optimize(y,theta,false,model(m),'fourier',2,0,[100 1000],false);
+        mfit{neuron,m} = model_optimize(y,theta,false,model(m),'fourier',2,2,[100 1000],false);
         subplot(2,length(model),m)
         plot(theta,y,'bo')
         hold on
@@ -97,7 +97,7 @@ for neuron = 1
     figure(neuron); clf
     mfit = cell(0);
     for m = 1
-        mfit{neuron,m} = model_sample(y,theta,false,model(m),'fourier',2,0,[100 1000],false);
+        mfit{neuron,m} = model_sample(y,theta,false,model(m),'fourier',2,2,[100 1000],false);
         subplot(2,length(model),m)
         plot(theta,y,'bo')
         hold on
